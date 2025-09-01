@@ -1,7 +1,6 @@
 # Mac Ollama + Open WebUI Starter
 
-![Validate Compose](https://github.com/Primadetaautomation/mac-ollama-openwebui-starter/actions/workflows/validate-compose.yml/badge.svg)
-![Release](https://img.shields.io/github/v/release/Primadetaautomation/mac-ollama-openwebui-starter?sort=semver)
+<!-- Badges removed: no CI/workflow executions desired -->
 
 Eenvoudig, lokaal en reviewbaar pakket om Ollama en Open WebUI op macOS te draaien. Ontworpen om snel te installeren en eenvoudig te toetsen aan (bijv.) beleidsregels van de Nederlandse Pensioenfederatie.
 
@@ -149,7 +148,7 @@ Na review kun je dit project naar GitHub pushen en via PR's laten toetsen aan ju
    git push -u origin main
    ```
 
-Na het pushen draaien de GitHub Actions die de Compose-bestanden valideren. PR's gebruiken de meegeleverde compliance‑checklist.
+PR's kunnen optioneel een compliance‑checklist gebruiken uit de templates; geautomatiseerde CI is uitgeschakeld/afwezig.
 
 ### One-liner installatie
 
