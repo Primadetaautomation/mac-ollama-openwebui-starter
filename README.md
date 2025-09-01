@@ -33,6 +33,16 @@ docker compose -f compose.all-in-one.yml up -d
 
 Open vervolgens: http://localhost:3000
 
+Windows one-liner (All‑in‑one)
+
+PowerShell (download Compose en start containers):
+
+```powershell
+$tmp = Join-Path $env:TEMP "openwebui-compose.yml"; \
+  iwr -useb https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/compose.all-in-one.yml | Out-File -Encoding utf8 $tmp; \
+  docker compose -f $tmp up -d
+```
+
 ## Snelstart (Windows, Ollama native + WebUI in Docker)
 
 Vereisten:
@@ -111,6 +121,13 @@ Aanbevolen uitgangspunten:
 - Poort bezet: pas `WEBUI_PORT` (of `ports`) aan in Compose en open de nieuwe URL.
 - Docker compose niet gevonden: installeer Docker Desktop of gebruik `docker compose v2`.
  - Windows: zorg dat Docker Desktop actief is en PowerShell tijdelijk `ExecutionPolicy Bypass` gebruikt voor de one-liner. Als `winget` ontbreekt, installeer Ollama handmatig.
+
+## FAQ (Windows)
+- Docker Desktop backend: Schakel WSL 2 backend in Docker Desktop → Settings → General.
+- `host.docker.internal` werkt niet: Update Docker Desktop; alternatief gebruik host IP (alleen lokaal).
+- Geen `winget`: Installeer Ollama via de Windows installer (link in README/USER‑GUIDE).
+- ExecutionPolicy fout: Start PowerShell als gebruiker en voeg `-ExecutionPolicy Bypass` toe voor de sessie.
+- Poortconflict 3000/11434: Pas `WEBUI_PORT`/`OLLAMA_PORT` aan in `.env` en (her)start.
 
 ---
 
