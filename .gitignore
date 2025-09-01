@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Env
+.env
+
+# Node/lockfiles (voor het geval er frontend tooling bijkomt)
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+
+# Python cache (Open WebUI draait in container; lokaal niet nodig)
+__pycache__/
+*.pyc
+
