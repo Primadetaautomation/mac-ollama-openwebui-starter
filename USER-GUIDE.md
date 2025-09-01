@@ -1,7 +1,8 @@
 # Gebruikershandleiding (Open WebUI)
 
 ## Starten
-- Mac + native Ollama: `make start` en open `http://localhost:3000`
+- macOS + native Ollama: `make start` of `./scripts/install-mac.sh` → open `http://localhost:3000`
+- Windows + native Ollama: `./scripts/install-windows.ps1` (PowerShell) → open `http://localhost:3000`
 - All‑in‑one (containers): `docker compose -f compose.all-in-one.yml up -d`
 
 Eerste bezoeker maakt een account (admin).
@@ -24,3 +25,12 @@ Eerste bezoeker maakt een account (admin).
 - Poort al in gebruik: wijzig `WEBUI_PORT` in `.env` of compose en start opnieuw.
 - Container logs: `docker logs -f open-webui`
 
+## One‑liners
+- macOS:
+  - `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/scripts/install-mac.sh)"`
+- Windows (PowerShell):
+  - `powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/scripts/install-windows.ps1 | iex"`
+
+## Uninstall
+- macOS: `./scripts/uninstall-mac.sh`
+- Windows (PowerShell): `./scripts/uninstall-windows.ps1`
