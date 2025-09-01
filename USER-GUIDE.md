@@ -1,5 +1,11 @@
 # Gebruikershandleiding (Open WebUI)
 
+## Vereisten (Windows)
+- Docker Desktop geïnstalleerd en draaiend
+- PowerShell met internettoegang (one‑liner gebruikt `ExecutionPolicy Bypass` voor deze sessie)
+- Ollama geïnstalleerd: `winget install -e --id Ollama.Ollama` of via installer (https://ollama.com/download/windows)
+- Verbinding container → host via `host.docker.internal` (standaard in Docker Desktop)
+
 ## Starten
 - macOS + native Ollama: `make start` of `./scripts/install-mac.sh` → open `http://localhost:3000`
 - Windows + native Ollama: `./scripts/install-windows.ps1` (PowerShell) → open `http://localhost:3000`
