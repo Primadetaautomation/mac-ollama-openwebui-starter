@@ -1,5 +1,8 @@
 # Mac Ollama + Open WebUI Starter
 
+![Validate Compose](https://github.com/Primadetaautomation/mac-ollama-openwebui-starter/actions/workflows/validate-compose.yml/badge.svg)
+![Release](https://img.shields.io/github/v/release/Primadetaautomation/mac-ollama-openwebui-starter?sort=semver)
+
 Eenvoudig, lokaal en reviewbaar pakket om Ollama en Open WebUI op macOS te draaien. Ontworpen om snel te installeren en eenvoudig te toetsen aan (bijv.) beleidsregels van de Nederlandse Pensioenfederatie.
 
 ## Snelstart (macOS, Ollama native + WebUI in Docker)
@@ -30,12 +33,38 @@ docker compose -f compose.all-in-one.yml up -d
 
 Open vervolgens: http://localhost:3000
 
+Windows one-liner (All‑in‑one)
+
+PowerShell (download Compose en start containers):
+
+```powershell
+$tmp = Join-Path $env:TEMP "openwebui-compose.yml"; \
+  iwr -useb https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/compose.all-in-one.yml | Out-File -Encoding utf8 $tmp; \
+  docker compose -f $tmp up -d
+```
+
+## Snelstart (Windows, Ollama native + WebUI in Docker)
+
+Vereisten:
+- Docker Desktop geïnstalleerd en draaiend (https://www.docker.com/products/docker-desktop/)
+- Ollama (via winget of handmatig)
+
+Stappen:
+1. Installeer Ollama (kies één):
+   - Via winget (PowerShell als gebruiker): `winget install -e --id Ollama.Ollama`
+   - Of download installer: https://ollama.com/download/windows en volg de stappen
+2. Start Open WebUI gekoppeld aan je lokale Ollama:
+   - PowerShell: `./scripts/install-windows.ps1`
+3. Open WebUI: http://localhost:3000
+
 ## Projectstructuur
 
 - `compose.webui-mac.yml` – Open WebUI container koppelt naar native Ollama via `host.docker.internal`.
 - `compose.all-in-one.yml` – Zowel Ollama als Open WebUI als containers, met persistente volumes.
 - `scripts/install-mac.sh` – Controleert vereisten, start Ollama (via brew) en Open WebUI container.
  - `scripts/uninstall-mac.sh` – Verwijdert containers en (optioneel) data volume.
+ - `scripts/install-windows.ps1` – Controleert Docker Desktop, probeert Ollama via winget te installeren en start Open WebUI.
+ - `scripts/uninstall-windows.ps1` – Stopt/verwijdert containers/volume en kan de Ollama-service stoppen.
 - `Makefile` – Handige wrappers voor starten/stoppen/status/logs.
 - `policy/` – Sjablonen voor governance en compliance (aanpasbaar aan interne richtlijnen/regels).
  - `.github/` – Workflows en templates (PR/Issues) incl. compliance-checklists.
@@ -91,6 +120,14 @@ Aanbevolen uitgangspunten:
 - Geen modellen zichtbaar in WebUI: Open WebUI → Settings → Models → Refresh; of `ollama pull <model>`.
 - Poort bezet: pas `WEBUI_PORT` (of `ports`) aan in Compose en open de nieuwe URL.
 - Docker compose niet gevonden: installeer Docker Desktop of gebruik `docker compose v2`.
+ - Windows: zorg dat Docker Desktop actief is en PowerShell tijdelijk `ExecutionPolicy Bypass` gebruikt voor de one-liner. Als `winget` ontbreekt, installeer Ollama handmatig.
+
+## FAQ (Windows)
+- Docker Desktop backend: Schakel WSL 2 backend in Docker Desktop → Settings → General.
+- `host.docker.internal` werkt niet: Update Docker Desktop; alternatief gebruik host IP (alleen lokaal).
+- Geen `winget`: Installeer Ollama via de Windows installer (link in README/USER‑GUIDE).
+- ExecutionPolicy fout: Start PowerShell als gebruiker en voeg `-ExecutionPolicy Bypass` toe voor de sessie.
+- Poortconflict 3000/11434: Pas `WEBUI_PORT`/`OLLAMA_PORT` aan in `.env` en (her)start.
 
 ---
 
@@ -114,10 +151,19 @@ Na review kun je dit project naar GitHub pushen en via PR's laten toetsen aan ju
 
 Na het pushen draaien de GitHub Actions die de Compose-bestanden valideren. PR's gebruiken de meegeleverde compliance‑checklist.
 
-### One-liner installatie (na publicatie)
-
-Vervang `<org>/<repo>` door jullie pad:
+### One-liner installatie
 
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/<org>/<repo>/main/scripts/install-mac.sh)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/scripts/install-mac.sh)"
 ```
+
+Windows PowerShell:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -Command "iwr -useb https://raw.githubusercontent.com/Primadetaautomation/mac-ollama-openwebui-starter/main/scripts/install-windows.ps1 | iex"
+```
+
+### Uninstall
+
+- macOS: `./scripts/uninstall-mac.sh`
+- Windows (PowerShell): `./scripts/uninstall-windows.ps1`
